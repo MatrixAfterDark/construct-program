@@ -37,21 +37,38 @@ jobs:
           node tests/page-lifecycle.cjs
           node tests/completion-receipt.cjs
           node tests/choice-entrance.cjs
+          node tests/briefing.cjs
           python3 - <<'PY'
           import pathlib, json, hashlib, shutil
           source=pathlib.Path('site-overrides')
           hashes=json.loads(pathlib.Path('override-hashes.json').read_text())
-          assert len(hashes)==16
+          assert len(hashes)==18
           assert {p.name for p in source.iterdir()}==set(hashes)
           target=pathlib.Path('/tmp/v225/matrix-after-dark-github-lean/dist')
           for name, digest in hashes.items():
-              assert pathlib.Path(name).name==name and pathlib.Path(name).suffix in ('.js','.html')
+              assert pathlib.Path(name).name==name and pathlib.Path(name).suffix in ('.js','.html','.css')
               data=(source/name).read_bytes()
               assert hashlib.sha256(data).hexdigest()==digest, name
               shutil.copy2(source/name,target/name)
-          print('Applied 16 verified text overrides; all approved media untouched')
+          print('Applied 18 verified text overrides; all approved media untouched')
           PY
           for script in site-overrides/*.js; do node --check "$script"; done
+      - name: Verify and copy the new briefing route media
+        run: |
+          python3 - <<'PYMEDIA'
+          import pathlib, json, hashlib, shutil
+          source=pathlib.Path('briefing-media')
+          hashes=json.loads(pathlib.Path('briefing-media-hashes.json').read_text())
+          assert len(hashes)==9
+          assert {p.name for p in source.iterdir()}==set(hashes)
+          target=pathlib.Path('/tmp/v225/matrix-after-dark-github-lean/dist/briefing-media')
+          target.mkdir()
+          for name, digest in hashes.items():
+              assert pathlib.Path(name).name==name
+              assert hashlib.sha256((source/name).read_bytes()).hexdigest()==digest
+              shutil.copy2(source/name,target/name)
+          print('New briefing media hashes verified; original assets unchanged')
+          PYMEDIA
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -1,9 +1,10 @@
 {
   "completion-receipt.js": "92e0e1c9fcbab5aedf7aac429c754a64c1abaa45c554f7773c416172a6086104",
   "training-wireframe.js": "c818b5e66acf5eadc528d25f091f0d07f9fe11e4f3d3ab1033be0731846ca43a",
-  "briefing.html": "2c58838670d0da94a1cf36ad0ad6eddd1c360f0b92d5423ea83db91934161e6d",
-  "briefing.js": "9da27afe6e7ba943c9768c102d73b64ae4fc53de17a749df2624a15cd3af77cc",
-  "index.html": "8b065e5b20ed3e53feda104b4ce06981d4bd74f58778a321ae745c533f7c032d",
+  "briefing-finale.js": "eef41baaef83becb446acafd3310e33a7b9dafc9b7621973594fb847ba7a9667",
+  "briefing.html": "b6bb0cafce0e1035bd4195a7b81e081c9a2b10d0082e61d0719c8c383c9eb516",
+  "briefing.js": "c0edb8d8364ebe77eea131c980d9587ccb19885b9a3fb92e236526bb9d645f34",
+  "index.html": "2be818dc74da62ef7f498db8d3bb73b3b67e3cf0fe608920d1fb3729ec7e0438",
   "choice-routes.js": "2d0219ea573b9d6aecb281ae3e9061576026b76db3b1fd9f0c1fc847c7f5d431",
   "experience.html": "15392d4506a3c7502a43bf3836174d6d37d5a50036eeeb0566874b19f7158e90",
   "final-character-code.js": "d09a531add6b9998bb5ac921e9bf3fd8329bf1cdb740e8764c8e928315488ee0",
@@ -14,5 +15,6 @@
   "after-dark-finale.js": "21036c1dc66491d95a2f433a9f792b0a1a91e2fb6f741a3b751127ef03f32fbb",
   "training.js": "f5a90ac7e1ddaa8359fbfb5b06e42b351ad1d95661533f85c2a71fcb1ea785da",
   "page-lifecycle.js": "0041935ce5ee8fc10da818aed1dcaa784780893b28db087c35879a262f1c806a",
-  "terminal.js": "a9d3258998881403b9e00c93d42fcd07f8a5dcaa956de19e8e9a105cb721af28"
+  "terminal.js": "a9d3258998881403b9e00c93d42fcd07f8a5dcaa956de19e8e9a105cb721af28",
+  "briefing.css": "b08484f1b336622dd637dea5ad94665dcb3ef46471a4648cf6ccb1550f698278"
 }
