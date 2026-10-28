@@ -54,3 +54,11 @@ The menu removes the repeated event title, enlarges the personalised greeting, t
 ## Wise choice and softer command reveal
 
 Choosing Enter the Construct sets a route-only flag so the original terminal typing greets the guest with A wise choice, NAME., pauses 850ms, then continues the approved program title/floppy sequence. The standalone one-option experience retains its original welcome. The menu command labels are 8% larger and both selections resolve smoothly over 800ms after the opening typing completes, with no empty bars. Reduced-motion mode reveals them immediately.
+
+## Capital terminal copy, audio entry and reveal flash fix
+
+Opening descriptions and A WISE CHOICE, NAME. use capitals. The Construct click calls enterConstruct(), which unlocks/resumes the original WebAudio context before starting its existing typed program opening and tap sounds. Original standalone reset behavior is preserved.
+
+The newly attached Neo bullet-stop and flying clips are inserted before the weapon racks in the continuous 8.29-second stream (about 10.6 seconds at 0.78 playback). Breathe stays at normal speed. Only the route-specific video is revised; approved Construct media remain unchanged.
+
+The briefing final panel now enters gather mode and resets character resolve to zero before it is made visible. A newly created portrait also uses that zero-default resolve opacity while decoding. The rain-covered action screen stays in front until portrait preparation completes; the code formation sets resolve to one only when it finishes. This closes the early-image flash path. Automated checks cover preflight ordering and click-authorised typing audio; actual visual and audible phone acceptance remains outstanding.

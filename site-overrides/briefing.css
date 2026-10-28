@@ -14,3 +14,5 @@ body[data-path-menu="true"] .program{font-family:'Courier New',monospace;font-si
 
 /* A soft CRT resolve rather than an abrupt button pop. */
 #path-choice .path-command{font-size:1.08em;padding:.46em .65em}#path-choice button .path-desc{font-size:.98em}body[data-menu-ready="true"] #path-options{animation:command-resolve .8s cubic-bezier(.2,.7,.2,1) both;transform-origin:top left}@keyframes command-resolve{0%{opacity:0;transform:translateY(4px);filter:brightness(1.5)}45%{opacity:.65}100%{opacity:1;transform:translateY(0);filter:brightness(1)}}@media(prefers-reduced-motion:reduce){body[data-menu-ready="true"] #path-options{animation:none}}
+
+.program{text-transform:uppercase}
