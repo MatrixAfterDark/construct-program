@@ -62,3 +62,7 @@ Opening descriptions and A WISE CHOICE, NAME. use capitals. The Construct click 
 The newly attached Neo bullet-stop and flying clips are inserted before the weapon racks in the continuous 8.29-second stream (about 10.6 seconds at 0.78 playback). Breathe stays at normal speed. Only the route-specific video is revised; approved Construct media remain unchanged.
 
 The briefing final panel now enters gather mode and resets character resolve to zero before it is made visible. A newly created portrait also uses that zero-default resolve opacity while decoding. The rain-covered action screen stays in front until portrait preparation completes; the code formation sets resolve to one only when it finishes. This closes the early-image flash path. Automated checks cover preflight ordering and click-authorised typing audio; actual visual and audible phone acceptance remains outstanding.
+
+## Rope-jump addition and concise Construct description
+
+The newly attached 1.4-second rope-jump clip is inserted before the weapon racks, keeping the same green CRT treatment and continuous foreground rain. The single stream is 9.71 seconds (roughly 12.4 seconds at the established playback rate). The approved menu description now reads FIND YOUR MATRIX LOOK. / DOWNLOAD YOUR SKILLS. Audio, name reveal, code formation and the full Construct route are otherwise preserved.
