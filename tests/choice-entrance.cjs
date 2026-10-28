@@ -1,5 +1,9 @@
-const fs=require('fs'),vm=require('vm'),assert=require('assert/strict');const read=p=>fs.readFileSync('site-overrides/'+p,'utf8');
-assert(read('index.html').includes('[ ENTER THE CONSTRUCT ]')&&read('index.html').includes('[ ACCESS THE BRIEFING ]'));
-for(const q of ['?name=Lexi','?name=A%26B','']){const links=['experience.html','briefing.html'].map(route=>({dataset:{route}}));vm.runInNewContext(read('choice-routes.js'),{URL,location:{href:'https://example.com/new/',search:q},document:{querySelectorAll:()=>links}});for(const a of links)assert.equal(new URL(a.href).searchParams.get('name'),new URLSearchParams(q).get('name'));}
-assert.equal(read('index.html').match(/<dl class="final-details">[\s\S]*?<\/dl>/)[0],read('experience.html').match(/<dl class="final-details">[\s\S]*?<\/dl>/)[0]);
-console.log('Choice labels, relative personalised routes and exact approved party copy: PASS');
+const fs=require('fs'),assert=require('assert/strict');const read=p=>fs.readFileSync('site-overrides/'+p,'utf8');
+const home=read('index.html'),original=read('experience.html'),terminal=read('terminal.js');
+assert(home.includes('data-path-menu="true"'));assert(home.indexOf('id="path-choice"')>home.indexOf('class="program"'));
+assert(home.includes('[ ENTER THE CONSTRUCT ]')&&home.includes('[ ACCESS THE BRIEFING ]'));
+assert(!original.includes('id="path-choice"'));assert(terminal.includes("if(document.body.dataset.pathMenu==='true')return;"));
+assert.equal(home.match(/<dl class="final-details">[\s\S]*?<\/dl>/)[0],original.match(/<dl class="final-details">[\s\S]*?<\/dl>/)[0]);
+const prior=fs.existsSync('../pause-update/overrides/terminal.js')?fs.readFileSync('../pause-update/overrides/terminal.js','utf8'):null;
+if(prior){const gate=terminal.replace("if(document.body.dataset.pathMenu==='true')return;\n ", '').replace("if(document.body.dataset.pathMenu!=='true'&&e.key", "if(e.key");assert.equal(gate,prior);}
+console.log('PASS menu in original CRT, gated startup, unchanged full-route terminal logic and exact party copy');

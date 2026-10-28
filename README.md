@@ -28,3 +28,11 @@ The uploaded Breathe.mp3 is copied byte-for-byte, plays at volume 0.38 and loops
 The four new GIFs were converted only into separate route-specific MP4 copies so they can pause/resume reliably; the original approved website media remain byte-identical. New route assets total 10,917,061 bytes, including the unchanged 8,037,492-byte MP3. The nine new asset hashes are in briefing-media-hashes.json.
 
 Automated checks cover montage order/timing, skip cancellation, receipt timing, relative links, names/fallback, reduced motion and playback rejection, plus prior lifecycle and receipt regressions. Browser playback, visual pacing, actual phone app switching and audible soundtrack checks remain separate acceptance work. The managed local preview daemon was unavailable during implementation.
+
+## Connected CRT revision
+
+The new index now uses the original physical terminal and a program menu inside its CRT. Enter the Construct removes the menu and calls the existing terminal opening, with all original sequence behavior retained. The terminal startup gate applies only to pages with data-path-menu=true; experience.html remains the original one-option restore route.
+
+Access the Briefing starts Breathe on the same user click and plays one continuous approximately five-second action-stream.mp4, avoiding per-shot buffering and black gaps. Aspect ratio is preserved with square pixels and letterboxing; every scene including weapon racks receives the same green CRT treatment. Continuous screen-blended code rain sits in front of the footage. At the end, the existing falling-code formation renderer (with a luminance mask for black backgrounds) resolves the supplied trio image over 2.2 seconds, then the Matrix/name reveal and approved invitation continue. No training-complete claims or selected-character controls are shown on this route.
+
+New route deployment copies only Breathe, action-stream.mp4 and final-trio.png. Old individual route clips/stills remain in Git history/repository but are excluded from the deployed package. The full Construct media and original hosted projects remain unchanged. Automated behavior/syntax/hash checks passed; this revision still requires visual desktop/phone and audible playback review because the browser connection and local preview service were unavailable.
