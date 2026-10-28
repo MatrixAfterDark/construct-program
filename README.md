@@ -66,3 +66,11 @@ The briefing final panel now enters gather mode and resets character resolve to 
 ## Rope-jump addition and concise Construct description
 
 The newly attached 1.4-second rope-jump clip is inserted before the weapon racks, keeping the same green CRT treatment and continuous foreground rain. The single stream is 9.71 seconds (roughly 12.4 seconds at the established playback rate). The approved menu description now reads FIND YOUR MATRIX LOOK. / DOWNLOAD YOUR SKILLS. Audio, name reveal, code formation and the full Construct route are otherwise preserved.
+
+## Construct audio interruption repair
+
+The hidden Construct warm-up now forces muted=true rather than relying on volume=0. Its playing event cannot reveal/unmute the film until the explicit playback request has passed entryCompletion, and delayed warm-up promises cannot pause authorised playback.
+
+Selection/training music retains the approved levels, fades and source asset, but routes through a GainNode when supported so ducking does not depend on an adjustable HTML media volume. Silent warm-up is explicit. A bounded visible/unmuted pause recovery attempts continuation without rewinding, while dialogue-finish restoration explicitly resumes the audio context and music playback. Pointer interaction can retry browser-blocked playback; hidden/off/muted states do not trigger unwanted playback. Original media files and original hosted projects remain unchanged.
+
+New automated tests simulate ignored element-volume writes, delayed priming, native pause interruption, dialogue-level restoration, hidden/muted guards and an interrupted audio context. Prior route/lifecycle/receipt tests and syntax checks also pass. This repairs identified code weaknesses; the friend's exact phone/browser failure has not been reproduced in a real device browser, so same-device audio/video sync and background/return acceptance remain necessary.

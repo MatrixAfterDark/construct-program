@@ -365,7 +365,7 @@ async function start(detail) {
   let skipped=false;const skip=$('#training-operator-skip');
   const playback=playVideo($('#training-operator-video'),config.operator.video,token,{cue:config.operator.diskCue,onFrame:renderOperatorSignal,onTime:operatorLoad,skippable:config.cinematicUpload,requireStart:true});
   if(skip){skip.hidden=!config.cinematicUpload;const stop=introSkip;skip.onclick=()=>{skipped=true;operatorPlaybackEnded=true;acceptProgram();if(config.matrixTakeover)beginTakeover(token);stop?.();};}
-  const ended=await playback;operatorPlaybackEnded=true;if(skip){skip.hidden=true;skip.onclick=null;}
+  const ended=await playback;operatorPlaybackEnded=true;if(valid(token))window.ResidualExperience?.duckTrainingMusic?.(.48,1400);if(skip){skip.hidden=true;skip.onclick=null;}
   if(!valid(token))return;
   if(!ended&&!skipped){if(config.operator.gongAtLoad){for(const stop of [...mediaStops])stop();}if(config.matrixTakeover){abortTakeover();$('#selection-stage').hidden=false;root.dataset.inlineCall=String(config.inlineCall);root.dataset.handoff='off';$('#training-operator').classList.remove('load-accepted');$('#training-operator').hidden=false;$('#training-manifest').hidden=true;$('#training-footer').hidden=true;deckReady=false;updateAvailability();setScene('operator');}root.removeAttribute('aria-busy');const retry=$('#training-media-play');retry.textContent='RETRY OPERATOR';retry.hidden=false;retry.onclick=()=>{arm();start(detail).catch(()=>reset());};return;}
  }
