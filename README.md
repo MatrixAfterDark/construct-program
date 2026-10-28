@@ -42,3 +42,7 @@ New route deployment copies only Breathe, action-stream.mp4 and final-trio.png. 
 The computer choice uses the original opening Courier New face and matching responsive base font sizes, with larger supporting copy. It types WELCOME, NAME (OPERATIVE fallback), the program heading and the two choices using the existing pausable lifecycle clock. Invisible layout copies reserve space while typing; controls remain keyboard-accessible, typing cancels when either route is chosen, and reduced-motion visitors get immediate text. The menu can scroll within the CRT on short screens rather than shrink its text.
 
 The existing five-second action stream now plays at 0.78 speed (roughly 6.5 seconds); Breathe remains at normal speed and starts on the briefing click. Additional uploaded GIFs (Fly, Stop Bullets, Trinity Jump Kick, Rope Jump) are pending reattachment because their temporary upload copies were cleared and were never saved in this repository. No substitute footage was introduced.
+
+## Green command-bar entrance
+
+The two menu choices use square green reverse-video command bars with dark terminal text. Enter the Construct blinks between two readable green levels every 1.8 seconds; hover/focus and reduced-motion mode stop the blink. Supporting text is shortened to the character/look hook, Sound on/Reality off, and Skip training/View the invitation. The personalised greeting and typing remain. Only menu presentation changed; the Construct, briefing, soundtrack and approved original sites remain unchanged.
