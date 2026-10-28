@@ -46,3 +46,7 @@ The existing five-second action stream now plays at 0.78 speed (roughly 6.5 seco
 ## Green command-bar entrance
 
 The two menu choices use square green reverse-video command bars with dark terminal text. Enter the Construct blinks between two readable green levels every 1.8 seconds; hover/focus and reduced-motion mode stop the blink. Supporting text is shortened to the character/look hook, Sound on/Reality off, and Skip training/View the invitation. The personalised greeting and typing remain. Only menu presentation changed; the Construct, briefing, soundtrack and approved original sites remain unchanged.
+
+## Dramatic greeting and grouped choices
+
+The menu removes the repeated event title, enlarges the personalised greeting, types it at 48ms/character, pauses 650ms, types Choose your connection at 35ms/character, then reveals both complete command/description groups after a 450ms pause. No empty button bars appear during typing. The reverse-video bars fit their labels; the descriptions and tagline are inside each button's clickable area. Breathe uses preload=auto and load() during the opening; play() is still invoked directly on the briefing gesture. Actual first-sound latency remains browser/network-dependent.

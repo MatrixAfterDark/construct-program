@@ -3,6 +3,7 @@
 const life=window.ProgramLifecycle,$=s=>document.querySelector(s),body=document.body;
 const name=(new URLSearchParams(location.search).get('name')||'OPERATIVE').replace(/[\x00-\x1f\x7f]/g,'').trim().slice(0,32).toUpperCase()||'OPERATIVE';
 const stream=$('#brief-stream'),video=$('#brief-action'),music=$('#brief-music'),sound=$('#brief-sound'),panel=$('#training-ready');
+music.preload='auto';music.load();
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let started=false,arrived=false,epoch=0,muted=false,watchdog=0;
 const wait=ms=>new Promise(resolve=>life.setTimeout(()=>resolve(true),ms));
@@ -21,7 +22,7 @@ async function arrive(){if(arrived)return;arrived=true;epoch++;life.clearTimeout
  await preparePortrait();const token=epoch;
  await window.BriefingFinale.show({panel,profile:{subject:name,role:'ZION // RESISTANCE SIGNAL'},valid:()=>token===epoch,wait,quiet:reduced,gatherCharacter:true});
 }
-async function begin(){if(started)return;started=true;body.dataset.briefing='true';delete body.dataset.pathMenu;$('#path-choice').hidden=true;stream.hidden=false;sound.hidden=false;music.preload='auto';playMusic();
+async function begin(){if(started)return;started=true;body.dataset.briefing='true';delete body.dataset.pathMenu;$('#path-choice').hidden=true;stream.hidden=false;sound.hidden=false;playMusic();
  // Separate facade only: the approved Construct engine remains idle behind this route.
  window.ZionAudio={get muted(){return muted;}};
  window.ProgramSurge.start($('#brief-rain'),{ambient:true,quiet:reduced});
