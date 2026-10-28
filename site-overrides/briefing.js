@@ -27,7 +27,8 @@ async function begin(){if(started)return;started=true;body.dataset.briefing='tru
  window.ProgramSurge.start($('#brief-rain'),{ambient:true,quiet:reduced});
  $('#brief-skip').focus({preventScroll:true});if(reduced){await arrive();return;}
  const token=++epoch;await wait(350);if(token!==epoch)return;
- watchdog=life.setTimeout(arrive,8500);
+ video.playbackRate=.78;
+ watchdog=life.setTimeout(arrive,14000);
  try{await video.play();if(token===epoch)stream.dataset.playing='true';}catch{await arrive();}
 }
 video.addEventListener('ended',arrive);video.addEventListener('error',()=>{if(started)arrive();});
