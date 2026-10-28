@@ -52,6 +52,7 @@ function duckTrainingMusic(target,duration){
 }
 
 function holdTrainingMusic(){if(trainingAudioActive){cancelAnimationFrame(raf);raf=0;}}
+function holdTrainingNarration(){const key={};musicControl.hold(key,.08);let released=false;return()=>{if(released)return;released=true;musicControl.release(key);if(trainingAudioActive&&phase!=='off'){fadeMusic(.48,1400);musicControl.ensure();}};}
 
 let selectionRun=0,busy=false,selectorSession=0,seenLooks=new Set();
 let identityLockRun=0,identityLockState='off',identityLockSounds=[];
@@ -156,6 +157,6 @@ $('#projection-skip').addEventListener('click',()=>{clear();shelfDone=true;if(ph
 function previewAccessories(){begin('ACCESSORY PREVIEW',{instant:true,deferNarration:true});$('#projection-skip').hidden=true;$('#projection-title').textContent='STYLE LIBRARY';$('#projection-name').textContent='PHONE SIZE CHECK';figure.classList.add('accessory-mode');figure.style.left='23%';figure.style.top='51%';figure.style.width='min(46dvh,48%)';$('#accessory-montage').hidden=false;const groups=[['EYEWEAR // MATRIX',[[0,'NEO'],[1,'TRINITY'],[2,'MORPHEUS']]],['OUTERWEAR',[[3,'LONG COAT'],[4,'LEATHER JACKET'],[6,'FITTED COAT']]],['FOOTWEAR',[[5,'COMBAT BOOTS'],[7,'HEELED COMBAT'],[8,'TRINITY BOOTS']]],['EQUIPMENT // CONNECTION',[[9,'SLIDER'],[10,'FUTURE'],[11,'FLIP']]]];let index=0;const nav=document.createElement('nav');nav.className='accessory-review-nav';nav.setAttribute('aria-label','Accessory preview groups');const back=document.createElement('button'),next=document.createElement('button'),status=document.createElement('span');back.type=next.type='button';back.textContent='← BACK';next.textContent='NEXT →';status.setAttribute('aria-live','polite');nav.append(back,status,next);$('#experience-frame').append(nav);function show(){const [title,items]=groups[index];wardrobeItems(title,items);$('#accessory-items').classList.toggle('phone-items',index===3);status.textContent=(index+1)+' / '+groups.length;back.disabled=index===0;next.textContent=index===groups.length-1?'RESTART ↺':'NEXT →';}back.addEventListener('click',()=>{if(index>0){index--;show();}});next.addEventListener('click',()=>{index=(index+1)%groups.length;show();});show();}
 function syncPhoneViewport(){const height=window.visualViewport?.height||window.innerHeight;if(height>0)$('#experience-frame').style.setProperty('--phone-vh',height+'px');if(phase==='moving')placeFigure();if(phase==='selecting'&&!$('#selection-stage').hidden)sizeSelectorFigure();}
 syncPhoneViewport();window.visualViewport?.addEventListener('resize',syncPhoneViewport);
-window.ResidualExperience={prime,begin,narrate,reset,syncSound,review:reviewIdentity,setTrainingAudio,duckTrainingMusic,holdTrainingMusic,get state(){return phase;}};
+window.ResidualExperience={prime,begin,narrate,reset,syncSound,review:reviewIdentity,setTrainingAudio,duckTrainingMusic,holdTrainingMusic,holdTrainingNarration,get state(){return phase;}};
 if(new URLSearchParams(location.search).get('preview')==='accessories')previewAccessories();
 })();

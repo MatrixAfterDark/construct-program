@@ -543,16 +543,17 @@ async function sparringTakeover(token,run){
  }finally{mediaStops.delete(stopPicture);if(pictureWatchdog!==null)clearTimeout(pictureWatchdog);film.removeEventListener('timeupdate',guard);film.removeEventListener('ended',cut);film.pause();root.dataset.sparringAssembly='false';root.dataset.sparringPan='false';root.dataset.sparringTeaserActive='false';cinema.hidden=true;cinema.style.opacity='';cinema.style.transition='';syncSound();}
 }
 function startTrainingNarration(token,events={}){
+ const releaseMusic=window.ResidualExperience?.holdTrainingNarration?.()||(()=>{});
  // The approved recording already contains the gong: never layer a second one.
  const begin=()=>{$('#training-briefing').disabled=true;window.InviteSignal?.stop?.();window.ResidualExperience?.duckTrainingMusic?.(.08,300);events.onStart?.();};
- if(!config.introductionAudio){window.InviteSignal?.stop?.();gongCue();window.ResidualExperience?.duckTrainingMusic?.(.48,1400);events.onFinish?.(false);return;}
+ if(!config.introductionAudio){window.InviteSignal?.stop?.();gongCue();window.ResidualExperience?.duckTrainingMusic?.(.48,1400);events.onFinish?.(false);releaseMusic();return;}
  return playSound(config.introductionAudio,token,false,events.onTime||null,begin).then(ended=>{
   events.onFinish?.(ended);
   if(!valid(token))return;
   $('#training-briefing').disabled=false;
   if(!ended){window.InviteSignal?.stop?.();gongCue();}
   window.ResidualExperience?.duckTrainingMusic?.(.48,1400);
- });
+ }).finally(releaseMusic);
 }
 function addCodeEffect(node){
  if(!node||Array.from(node.children).some(x=>x.dataset.codeEffect==='true'))return;

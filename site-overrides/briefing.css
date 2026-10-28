@@ -16,3 +16,7 @@ body[data-path-menu="true"] .program{font-family:'Courier New',monospace;font-si
 #path-choice .path-command{font-size:1.08em;padding:.46em .65em}#path-choice button .path-desc{font-size:.98em}body[data-menu-ready="true"] #path-options{animation:command-resolve .8s cubic-bezier(.2,.7,.2,1) both;transform-origin:top left}@keyframes command-resolve{0%{opacity:0;transform:translateY(4px);filter:brightness(1.5)}45%{opacity:.65}100%{opacity:1;transform:translateY(0);filter:brightness(1)}}@media(prefers-reduced-motion:reduce){body[data-menu-ready="true"] #path-options{animation:none}}
 
 .program{text-transform:uppercase}
+
+.final-home{display:flex;justify-content:center;margin:36px 0 0;padding:24px 0 max(18px,env(safe-area-inset-bottom));border-top:1px solid #235337}.final-home a{display:inline-block;min-height:44px;padding:12px 18px;border:1px solid #318b51;background:#020805;color:#8ee8a0;font:12px 'IBM Plex Mono','Courier New',monospace;letter-spacing:.08em;text-decoration:none}.final-home a:is(:hover,:focus-visible){color:#021207;background:#8ee8a0;outline:2px solid #8ee8a0;outline-offset:3px}
+
+#training-ready:not([data-finale="ready"]) .final-home{visibility:hidden}
