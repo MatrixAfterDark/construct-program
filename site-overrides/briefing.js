@@ -35,5 +35,5 @@ async function begin(){if(started)return;started=true;body.dataset.briefing='tru
 video.addEventListener('ended',arrive);video.addEventListener('error',()=>{if(started)arrive();});
 $('#brief-skip').addEventListener('click',arrive);
 $('#path-briefing').addEventListener('click',begin);
-$('#path-construct').addEventListener('click',()=>{if(started)return;delete body.dataset.pathMenu;$('#path-choice').hidden=true;window.ZionTerminal.reset();});
+$('#path-construct').addEventListener('click',()=>{if(started)return;body.dataset.constructChosen='true';delete body.dataset.pathMenu;$('#path-choice').hidden=true;window.ZionTerminal.reset();});
 })();

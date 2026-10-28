@@ -9,7 +9,7 @@ function setup({reduced=false,name='Lexi',blocked=false}={}){
  return{el,body,finales,plays,next,flush,get resets(){return resets}};
 }
 (async()=>{
- let s=setup();assert.equal(s.plays.length,0);s.el('#path-construct').click();assert.equal(s.resets,1);assert.equal(s.body.dataset.pathMenu,undefined);
+ let s=setup();assert.equal(s.plays.length,0);s.el('#path-construct').click();assert.equal(s.resets,1);assert.equal(s.body.dataset.constructChosen,'true');assert.equal(s.body.dataset.pathMenu,undefined);
  s=setup();s.el('#path-briefing').click();await s.next();assert.deepEqual(s.plays,['#brief-music','#brief-action']);assert.equal(s.finales.length,0);assert.equal(s.el('#brief-stream').dataset.playing,'true');s.el('#brief-action').fire('ended');await s.flush();assert.equal(s.finales.length,1);assert.equal(s.finales[0].profile.subject,'LEXI');assert.equal(s.finales[0].gatherCharacter,true);
  s=setup();s.el('#path-briefing').click();s.el('#brief-skip').click();s.el('#brief-skip').click();await s.flush();await s.next();assert.equal(s.finales.length,1);assert.equal(s.el('#brief-action').paused,true);
  s=setup({reduced:true,name:''});s.el('#path-briefing').click();await s.flush();assert.equal(s.finales[0].profile.subject,'OPERATIVE');assert.deepEqual(s.plays,['#brief-music']);

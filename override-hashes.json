@@ -1,7 +1,7 @@
 {
   "completion-receipt.js": "92e0e1c9fcbab5aedf7aac429c754a64c1abaa45c554f7773c416172a6086104",
-  "briefing.js": "7f6f65276ec4966022dde02c2a53bf71ce6db5c2264bdb7dc93993ca1c30b997",
-  "briefing.css": "a557053be2c35b2ff67e10699bc980b07c7a6fcde972a7000d87a6d59b9e0e02",
+  "briefing.js": "95b17fb6ec7f5daf5396ed5b5492f0b02fe0c4a578bcaa3673f027b3383ae494",
+  "briefing.css": "100d7007b2ff130d3d2f3c0e6a6386ed9ab931c6a46e92ef339bc0ec1202b030",
   "after-dark-finale.js": "21036c1dc66491d95a2f433a9f792b0a1a91e2fb6f741a3b751127ef03f32fbb",
   "page-lifecycle.js": "0041935ce5ee8fc10da818aed1dcaa784780893b28db087c35879a262f1c806a",
   "final-character-code.js": "d09a531add6b9998bb5ac921e9bf3fd8329bf1cdb740e8764c8e928315488ee0",
@@ -14,9 +14,9 @@
   "experience.html": "15392d4506a3c7502a43bf3836174d6d37d5a50036eeeb0566874b19f7158e90",
   "crt-letter-portal.js": "4af2e7d548b43c0e0d79711bb703f00e18932fa762dff15870ffea99ceb4186a",
   "identity.js": "6262e53283e32b8a8bd7d9cf97da4d5a31a3608735b600e42518925819f2fbe5",
-  "index.html": "65336f97445a97e4ab20cf6768ca5ea28b68f02364b1da93ed28e1587633d4d6",
-  "briefing.html": "4865eda2926bd484c71dd12643b5c917b1499efea1e23fb9daee2ee4fc5170a8",
+  "index.html": "e343465fb9ade78e9c933ae1a3f45fb7dcb9e5e72d5eb3294f1f7237c441bd15",
+  "briefing.html": "5246f5e5ff65e7a5c8101dc20e3486672df7fe33e87b50af0e0019a998ccf4d1",
   "brief-code-image.js": "ded8188a49d9dbcae783160d45676cc8818fabed933aa4c74031df766a60ce0c",
-  "terminal.js": "7637df32fe6ffac9cc45c7992e1bb763866900fa21c745c59817b94ec384d9a6",
+  "terminal.js": "07949df5e85216cded48ec32f0432f04ce56cee4e5cec8faa5a4711d925a142a",
   "training.js": "f5a90ac7e1ddaa8359fbfb5b06e42b351ad1d95661533f85c2a71fcb1ea785da"
 }

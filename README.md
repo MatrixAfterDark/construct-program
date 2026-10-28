@@ -50,3 +50,7 @@ The two menu choices use square green reverse-video command bars with dark termi
 ## Dramatic greeting and grouped choices
 
 The menu removes the repeated event title, enlarges the personalised greeting, types it at 48ms/character, pauses 650ms, types Choose your connection at 35ms/character, then reveals both complete command/description groups after a 450ms pause. No empty button bars appear during typing. The reverse-video bars fit their labels; the descriptions and tagline are inside each button's clickable area. Breathe uses preload=auto and load() during the opening; play() is still invoked directly on the briefing gesture. Actual first-sound latency remains browser/network-dependent.
+
+## Wise choice and softer command reveal
+
+Choosing Enter the Construct sets a route-only flag so the original terminal typing greets the guest with A wise choice, NAME., pauses 850ms, then continues the approved program title/floppy sequence. The standalone one-option experience retains its original welcome. The menu command labels are 8% larger and both selections resolve smoothly over 800ms after the opening typing completes, with no empty bars. Reduced-motion mode reveals them immediately.
