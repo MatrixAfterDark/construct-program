@@ -1,0 +1,1 @@
+(()=>{'use strict';for(const a of document.querySelectorAll('[data-route]')){const u=new URL(a.dataset.route,location.href);u.search=location.search;u.searchParams.delete('review');a.href=u.href;}})();
