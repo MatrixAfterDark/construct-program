@@ -1,38 +1,22 @@
-/* Explicit guest confirmation only. Independent of all media and sequence code. */
-(()=>{'use strict';
-const root=document.getElementById('party-rsvp');if(!root)return;
-const $=id=>document.getElementById(id),endpoint='https://formsubmit.co/ajax/steven.cuzzillo@gmail.com';
-const fallback=document.getElementById('rsvp-email-fallback');
-const clean=(value,max=32)=>String(value||'').replace(/[\x00-\x1f\x7f]/g,'').trim().slice(0,max);
-const linkedName=clean(new URLSearchParams(location.search).get('name')).toUpperCase();
-const known=!!linkedName&&linkedName!=='OPERATIVE';
-const nameInput=$('rsvp-name'),backupInput=$('rsvp-backup'),form=$('rsvp-form'),choices=$('rsvp-choices'),status=$('rsvp-status'),change=$('rsvp-change'),solo=$('rsvp-solo'),plus=$('rsvp-plus'),confirm=$('rsvp-confirm');
-let busy=false,record=null;
-nameInput.value=known?linkedName:'';nameInput.setAttribute('aria-required',String(!known));$('rsvp-name-row').hidden=known;
-const name=()=>known?linkedName:clean(nameInput.value).toUpperCase();
-const key=n=>'matrix-after-dark:2026-11-07:rsvp:v1:'+encodeURIComponent(n);
-const signature=(mode,backup)=>JSON.stringify([mode,mode==='backup'?backup:'']);
-function saved(n){try{const r=JSON.parse(window.localStorage.getItem(key(n)));if(r?.name===n&&['solo','backup'].includes(r.mode)&&typeof r.backup==='string')return r;}catch{}return null;}
-function remember(r){record=r;try{window.localStorage.setItem(key(r.name),JSON.stringify(r));}catch{}}
-function setBusy(value){busy=value;root.setAttribute('aria-busy',String(value));for(const el of [nameInput,backupInput,solo,plus,confirm,change])el.disabled=value;}
-function message(text,error=false){status.textContent=text;status.dataset.state=error?'error':'ready';}
-function confirmed(r){fallback.hidden=true;$('rsvp-name-row').hidden=true;choices.hidden=true;form.hidden=true;plus.setAttribute('aria-expanded','false');change.hidden=false;message('CONNECTION CONFIRMED. SEE YOU IN THE MATRIX.');$('rsvp-summary').textContent=r.mode==='solo'?'SOLO OPERATIVE // 1 GUEST':'BRINGING BACKUP // 2 GUESTS'+(r.backup?' · '+r.backup:'');}
-function validName(){if(name())return true;message('ENTER YOUR NAME TO CONFIRM.',true);nameInput.focus();return false;}
-async function send(mode){if(busy||!validName())return;const guest=name(),backup=mode==='backup'?clean(backupInput.value,64).toUpperCase():'';
- const previous=record?.name===guest?record:saved(guest);if(previous&&signature(previous.mode,previous.backup)===signature(mode,backup)){record=previous;confirmed(previous);return;}
- fallback.hidden=true;setBusy(true);message('TRANSMITTING CONNECTION…');
- const controller=typeof AbortController==='function'?new AbortController():null;let timeout;
+/* One-tap RSVP with silent notification. No media or sequence code is touched. */
+(()=>{'use strict';const root=document.getElementById('party-rsvp');if(!root)return;
+const name=(new URLSearchParams(location.search).get('name')||'OPERATIVE').replace(/[\x00-\x1f\x7f]/g,'').trim().slice(0,32).toUpperCase()||'OPERATIVE';
+const endpoint='https://formsubmit.co/ajax/steven.cuzzillo@gmail.com',solo=document.getElementById('rsvp-solo'),plus=document.getElementById('rsvp-plus'),status=document.getElementById('rsvp-status');
+const key='matrix-after-dark:2026-11-07:rsvp:v2:'+encodeURIComponent(name),legacyKey='matrix-after-dark:2026-11-07:rsvp:v1:'+encodeURIComponent(name);
+let record=null,busy=false,attempts=0,retry=0;
+function read(){try{const r=JSON.parse(window.localStorage.getItem(key));if(r?.name===name&&['solo','backup'].includes(r.mode)&&typeof r.id==='string'&&typeof r.delivered==='boolean')return r;const old=JSON.parse(window.localStorage.getItem(legacyKey));if(old?.name===name&&['solo','backup'].includes(old.mode))return{name,mode:old.mode,id:'previous-'+(old.submittedAt||name),selectedAt:old.submittedAt||new Date().toISOString(),delivered:true,updated:false};}catch{}return null;}
+function persist(){try{window.localStorage.setItem(key,JSON.stringify(record));}catch{}}
+function render(){root.setAttribute('aria-busy',String(busy));for(const [button,mode] of [[solo,'solo'],[plus,'backup']]){button.disabled=busy;button.setAttribute('aria-pressed',String(record?.mode===mode));}status.textContent=!record?'':record.delivered?'CONNECTION CONFIRMED. SEE YOU IN THE MATRIX.':busy?'TRANSMITTING CONNECTION…':'SAVED ON THIS DEVICE. WAITING TO SEND.';}
+function clearRetry(){window.clearTimeout(retry);retry=0;}
+async function flush(){if(busy||!record||record.delivered||document.hidden)return;clearRetry();busy=true;attempts++;render();const sending=record,controller=typeof AbortController==='function'?new AbortController():null;let timeout;
  try{
-  const request=fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},keepalive:true,...(controller?{signal:controller.signal}:{}),body:JSON.stringify({name:guest,attendance:'CONFIRMED',response:mode==='solo'?'SOLO OPERATIVE':'BRINGING BACKUP',party_size:mode==='solo'?1:2,backup_name:backup||'NOT PROVIDED',event:'The Matrix After Dark — 7 November 2026',submitted_at:new Date().toISOString(),_subject:'Matrix Construct — RSVP'+(previous?' UPDATED':'')+' — '+guest+' — '+(mode==='solo'?'SOLO':'+1'),_template:'table',_captcha:'false'})}).then(async response=>{if(!response.ok)throw Error('Request rejected');const result=await response.json();if(result.success!==true&&result.success!=='true')throw Error('Submission not accepted');});
+  const request=fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},keepalive:true,...(controller?{signal:controller.signal}:{}),body:JSON.stringify({name,activity:'RSVP SELECTION',attendance:'CONFIRMED',response:sending.mode==='solo'?'SOLO OPERATIVE':'BRINGING BACKUP',party_size:sending.mode==='solo'?1:2,event:'The Matrix After Dark — 7 November 2026',selected_at:sending.selectedAt,notification_id:sending.id,_subject:'Matrix Construct — RSVP'+(sending.updated?' UPDATED':'')+' — '+name+' — '+(sending.mode==='solo'?'SOLO':'+1'),_template:'table',_captcha:'false'})}).then(async response=>{if(!response.ok)throw Error('Request rejected');const result=await response.json();if(result.success!==true&&result.success!=='true')throw Error('Notification not accepted');});
   await Promise.race([request,new Promise((_,reject)=>{timeout=window.setTimeout(()=>{controller?.abort();reject(Error('Request timed out'));},15000);})]);
-  const confirmedRecord={name:guest,mode,backup,submittedAt:new Date().toISOString()};remember(confirmedRecord);confirmed(confirmedRecord);
- }catch{const subject='Matrix Construct — RSVP — '+guest+' — '+(mode==='solo'?'SOLO':'+1');const body=['NAME: '+guest,'ATTENDANCE: CONFIRMED','PARTY SIZE: '+(mode==='solo'?'1':'2'),'BACKUP: '+(backup||'NOT PROVIDED'),'EVENT: THE MATRIX AFTER DARK — 7 NOVEMBER 2026'].join('\n');fallback.href='mailto:steven.cuzzillo@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);fallback.hidden=false;message('UPLINK UNAVAILABLE. TRY AGAIN OR SEND BY EMAIL.',true);}
- finally{window.clearTimeout(timeout);setBusy(false);}
+  if(record?.id===sending.id){record={...record,delivered:true};persist();}
+ }catch{}finally{window.clearTimeout(timeout);busy=false;render();if(record&&!record.delivered&&attempts<3)retry=window.setTimeout(()=>{retry=0;flush();},attempts===1?20000:60000);}
 }
-solo.addEventListener('click',()=>send('solo'));
-plus.addEventListener('click',()=>{if(busy||!validName())return;form.hidden=false;plus.setAttribute('aria-expanded','true');backupInput.focus();message('');});
-form.addEventListener('submit',event=>{event.preventDefault();send('backup');});
-fallback.addEventListener('click',()=>{message('SEND THE MESSAGE IN YOUR EMAIL APP TO CONFIRM.');});
-change.addEventListener('click',()=>{if(busy)return;choices.hidden=false;$('rsvp-name-row').hidden=known;change.hidden=true;$('rsvp-summary').textContent='';message('');form.hidden=record?.mode!=='backup';plus.setAttribute('aria-expanded',String(!form.hidden));backupInput.value=record?.backup||'';solo.focus();});
-if(known){record=saved(linkedName);if(record)confirmed(record);}
+function choose(mode){if(busy)return;if(record?.mode===mode){if(!record.delivered){attempts=0;flush();}return;}clearRetry();record={name,mode,id:typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+'-'+Math.random().toString(36).slice(2),selectedAt:new Date().toISOString(),delivered:false,updated:!!record?.delivered||!!record?.updated};persist();attempts=0;render();flush();}
+solo.addEventListener('click',()=>choose('solo'));plus.addEventListener('click',()=>choose('backup'));
+window.addEventListener('online',()=>{attempts=0;flush();});document.addEventListener('visibilitychange',()=>{if(!document.hidden){attempts=0;flush();}});
+record=read();render();if(record&&!record.delivered)flush();
 })();
