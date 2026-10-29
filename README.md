@@ -120,3 +120,7 @@ Buttons immediately display only SELECTION LOCKED after a choice. This acknowled
 ## Remove stray repeat after Neo flight (v16)
 
 Removed original action-stream frames 160–163 (three stray backward-dodge frames plus a one-frame weapons-room flash) between Neo flight and rope jump. 229 frames remain at 24fps, 640x360, 9.541667s. The main backward-dodge shot at 2.20–3.75 source seconds retains its .45x playback. All seven principal clips remain in order. Only the generated briefing montage was re-exported; approved Construct source media and all audio stay unchanged.
+
+## Existing FormSubmit recipient identifier (v17)
+
+Switched only the attendance AJAX destination from the plain Gmail address to the existing recipient identifier supplied in the owner’s previous FormSubmit email for matrixafterdark.github.io. This is a delivery test, not a verified fix: a direct labelled test still received HTTP 521. Button acknowledgement, retry and delivery verification logic, footage and audio remain unchanged. Owner inbox receipt is still required to confirm delivery.

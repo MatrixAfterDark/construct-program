@@ -1,7 +1,7 @@
 /* One-tap RSVP with silent notification. No media or sequence code is touched. */
 (()=>{'use strict';const root=document.getElementById('party-rsvp');if(!root)return;
 const name=(new URLSearchParams(location.search).get('name')||'OPERATIVE').replace(/[\x00-\x1f\x7f]/g,'').trim().slice(0,32).toUpperCase()||'OPERATIVE';
-const endpoint='https://formsubmit.co/ajax/steven.cuzzillo@gmail.com',solo=document.getElementById('rsvp-solo'),plus=document.getElementById('rsvp-plus'),status=document.getElementById('rsvp-status');
+const endpoint='https://formsubmit.co/ajax/7f54c1a73e1be0744d6ad589eaa50030',solo=document.getElementById('rsvp-solo'),plus=document.getElementById('rsvp-plus'),status=document.getElementById('rsvp-status');
 const key='matrix-after-dark:2026-11-07:rsvp:v2:'+encodeURIComponent(name),legacyKey='matrix-after-dark:2026-11-07:rsvp:v1:'+encodeURIComponent(name);
 let record=null,busy=false,attempts=0,retry=0;
 function read(){try{const r=JSON.parse(window.localStorage.getItem(key));if(r?.name===name&&['solo','backup'].includes(r.mode)&&typeof r.id==='string'&&typeof r.delivered==='boolean')return r;const old=JSON.parse(window.localStorage.getItem(legacyKey));if(old?.name===name&&['solo','backup'].includes(old.mode))return{name,mode:old.mode,id:'previous-'+(old.submittedAt||name),selectedAt:old.submittedAt||new Date().toISOString(),delivered:true,updated:false};}catch{}return null;}
