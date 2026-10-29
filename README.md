@@ -108,3 +108,7 @@ Automated tests cover both one-tap choices, link-name/fallback, successful and f
 ## First-play film loading (v13)
 
 The original film is preloaded during training without restarting its transfer at signoff. Playback now has a separate 12-second startup allowance and a 5.5-second progress watchdog, rather than a 5.5-second total budget including loading. Advancing native video time can reveal the film if the first frame callback is delayed. The approved media, zoom duration, music and speech mix are unchanged. Mock cold-start and cancellation tests pass; real first-visit iPhone verification remains outstanding. Email delivery remains unverified: the configured FormSubmit service returned HTTP 521 during the check.
+
+## Simple button-only notification (v14)
+
+Replaces separate final-page viewed receipts with button-only attendance messages for both routes. Uses the original Invite endpoint and small message format: name, ATTENDING, plus_one YES/NO, event, timestamp and email formatting fields. No guest inputs added. Queue/retry and confirmed-response checks remain so a network failure is never reported as success. All audio, media and sequence scripts are unchanged. End-to-end inbox delivery must still be confirmed.
