@@ -116,3 +116,7 @@ Replaces separate final-page viewed receipts with button-only attendance message
 ## Selection acknowledgement and Neo dodge pacing (v15)
 
 Buttons immediately display only SELECTION LOCKED after a choice. This acknowledges local selection, not email delivery. Backend acknowledgement, successful-delivery deduplication and pending retry logic remain separate and unchanged. No loading or failure messages are displayed. Email delivery remains unverified. All seven briefing clips remain in the same continuous, byte-identical MP4. Playback slows from .78x to .45x during the backward bullet dodge (2.20–3.75 source seconds), returning to .78x afterwards without seeking. The startup safety timeout is 30 seconds to allow the added screen time. No Construct/audio engine files or approved media were changed.
+
+## Remove stray repeat after Neo flight (v16)
+
+Removed original action-stream frames 160–163 (three stray backward-dodge frames plus a one-frame weapons-room flash) between Neo flight and rope jump. 229 frames remain at 24fps, 640x360, 9.541667s. The main backward-dodge shot at 2.20–3.75 source seconds retains its .45x playback. All seven principal clips remain in order. Only the generated briefing montage was re-exported; approved Construct source media and all audio stay unchanged.
