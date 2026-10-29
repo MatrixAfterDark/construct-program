@@ -1,6 +1,9 @@
 name: Publish approved static website to GitHub Pages
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/github-pages.yml']
 permissions:
   contents: read
   pages: write
@@ -40,11 +43,12 @@ jobs:
           node tests/briefing.cjs
           node tests/terminal-menu.cjs
           node tests/construct-music.cjs
+          node tests/party-rsvp.cjs
           python3 - <<'PY'
           import pathlib, json, hashlib, shutil
           source=pathlib.Path('site-overrides')
           hashes=json.loads(pathlib.Path('override-hashes.json').read_text())
-          assert len(hashes)==21
+          assert len(hashes)==23
           assert {p.name for p in source.iterdir()}==set(hashes)
           target=pathlib.Path('/tmp/v225/matrix-after-dark-github-lean/dist')
           for name, digest in hashes.items():
@@ -52,7 +56,7 @@ jobs:
               data=(source/name).read_bytes()
               assert hashlib.sha256(data).hexdigest()==digest, name
               shutil.copy2(source/name,target/name)
-          print('Applied 21 verified text overrides; all approved media untouched')
+          print('Applied 23 verified text overrides; all approved media untouched')
           PY
           for script in site-overrides/*.js; do node --check "$script"; done
       - name: Verify and copy the new briefing route media
