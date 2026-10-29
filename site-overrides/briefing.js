@@ -29,9 +29,12 @@ async function begin(){if(started)return;started=true;body.dataset.briefing='tru
  $('#brief-skip').focus({preventScroll:true});if(reduced){await arrive();return;}
  const token=++epoch;await wait(350);if(token!==epoch)return;
  video.playbackRate=.78;
- watchdog=life.setTimeout(arrive,20000);
+ watchdog=life.setTimeout(arrive,30000);
  try{await video.play();if(token===epoch)stream.dataset.playing='true';}catch{await arrive();}
 }
+// Preserve every shot; linger on the existing backward bullet dodge without seeking.
+function actionTempo(){video.playbackRate=video.currentTime>=2.20&&video.currentTime<3.75?.45:.78;}
+video.addEventListener('timeupdate',actionTempo);
 video.addEventListener('ended',arrive);video.addEventListener('error',()=>{if(started)arrive();});
 $('#brief-skip').addEventListener('click',arrive);
 $('#path-briefing').addEventListener('click',begin);

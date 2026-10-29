@@ -6,7 +6,7 @@ const key='matrix-after-dark:2026-11-07:rsvp:v2:'+encodeURIComponent(name),legac
 let record=null,busy=false,attempts=0,retry=0;
 function read(){try{const r=JSON.parse(window.localStorage.getItem(key));if(r?.name===name&&['solo','backup'].includes(r.mode)&&typeof r.id==='string'&&typeof r.delivered==='boolean')return r;const old=JSON.parse(window.localStorage.getItem(legacyKey));if(old?.name===name&&['solo','backup'].includes(old.mode))return{name,mode:old.mode,id:'previous-'+(old.submittedAt||name),selectedAt:old.submittedAt||new Date().toISOString(),delivered:true,updated:false};}catch{}return null;}
 function persist(){try{window.localStorage.setItem(key,JSON.stringify(record));}catch{}}
-function render(){root.setAttribute('aria-busy',String(busy));for(const [button,mode] of [[solo,'solo'],[plus,'backup']]){button.disabled=busy;button.setAttribute('aria-pressed',String(record?.mode===mode));}status.textContent=!record?'':record.delivered?'CONNECTION CONFIRMED. SEE YOU IN THE MATRIX.':busy?'TRANSMITTING CONNECTION…':'SAVED ON THIS DEVICE. WAITING TO SEND.';}
+function render(){root.setAttribute('aria-busy',String(busy));for(const [button,mode] of [[solo,'solo'],[plus,'backup']]){button.disabled=busy;button.setAttribute('aria-pressed',String(record?.mode===mode));}status.textContent=record?'SELECTION LOCKED.':'';}
 function clearRetry(){window.clearTimeout(retry);retry=0;}
 async function flush(){if(busy||!record||record.delivered||document.hidden)return;clearRetry();busy=true;attempts++;render();const sending=record,controller=typeof AbortController==='function'?new AbortController():null;let timeout;
  try{

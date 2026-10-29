@@ -112,3 +112,7 @@ The original film is preloaded during training without restarting its transfer a
 ## Simple button-only notification (v14)
 
 Replaces separate final-page viewed receipts with button-only attendance messages for both routes. Uses the original Invite endpoint and small message format: name, ATTENDING, plus_one YES/NO, event, timestamp and email formatting fields. No guest inputs added. Queue/retry and confirmed-response checks remain so a network failure is never reported as success. All audio, media and sequence scripts are unchanged. End-to-end inbox delivery must still be confirmed.
+
+## Selection acknowledgement and Neo dodge pacing (v15)
+
+Buttons immediately display only SELECTION LOCKED after a choice. This acknowledges local selection, not email delivery. Backend acknowledgement, successful-delivery deduplication and pending retry logic remain separate and unchanged. No loading or failure messages are displayed. Email delivery remains unverified. All seven briefing clips remain in the same continuous, byte-identical MP4. Playback slows from .78x to .45x during the backward bullet dodge (2.20–3.75 source seconds), returning to .78x afterwards without seeking. The startup safety timeout is 30 seconds to allow the added screen time. No Construct/audio engine files or approved media were changed.
