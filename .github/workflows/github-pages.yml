@@ -1,6 +1,9 @@
 name: Publish approved static website to GitHub Pages
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/github-pages.yml']
 permissions:
   contents: read
   pages: write
@@ -41,6 +44,7 @@ jobs:
           node tests/terminal-menu.cjs
           node tests/construct-music.cjs
           node tests/party-rsvp.cjs
+          node tests/letter-film.cjs
           python3 - <<'PY'
           import pathlib, json, hashlib, shutil
           source=pathlib.Path('site-overrides')

@@ -344,6 +344,7 @@ async function finishFilmSection(token){
 async function start(detail) {
  reset();const token=epoch;profile=Object.freeze({...detail});installed=new Set();
  await prepare();if(token!==epoch)return;
+ prepareLetterFilm();
  if(config.introductionAudio)loadSound(config.introductionAudio);
  if(config.sparringTeaser&&config.introductionVideo){const film=$('#training-intro-video');film.preload='auto';film.muted=true;film.defaultMuted=true;film.volume=0;film.src=config.sparringOpeningVideo||config.introductionVideo;film.load();}
  if(!captureAvatar())return;
@@ -577,14 +578,29 @@ function layoutReady(){
  const bounds=host.getBoundingClientRect(),scale=Math.max(.01,Math.min(bounds.width/Math.max(1,portraitWidth),bounds.height/Math.max(1,portraitHeight)));
  Object.assign(copy.style,{width:portraitWidth+'px',height:portraitHeight+'px',transform:`translateX(-50%) scale(${mirrored?-scale:scale},${scale})`});
 }
+// Keep the existing download and decoder warm throughout training; load() here
+// would abort a first-visit transfer just before the letter zoom.
+function prepareLetterFilm(){
+ const film=$('#training-letter-film');if(!film)return;
+ film.preload='auto';film.muted=true;film.defaultMuted=true;
+ if(!film.getAttribute('src'))film.src='./assets/crt-letter-flythrough.mp4';
+ if(film.networkState===0)film.load();
+}
 function playLetterFilm(token,onFrame=()=>{}){
  const film=$('#training-letter-film');if(!film||!valid(token))return Promise.resolve(false);
  return new Promise(resolve=>{
-  let done=false,frameShown=false,frameId=null;const revealFrame=()=>{if(done||frameShown)return;frameShown=true;onFrame();};const finish=ok=>{if(done)return;done=true;clearTimeout(timeout);film.removeEventListener('ended',ended);film.removeEventListener('error',failed);film.removeEventListener('playing',playing);if(frameId!==null)film.cancelVideoFrameCallback?.(frameId);mediaStops.delete(stop);film.pause();film.hidden=true;resolve(ok);};
-  const ended=()=>finish(true),failed=()=>finish(false),stop=()=>finish(false),timeout=setTimeout(failed,5500);
-  const playing=()=>{if(film.requestVideoFrameCallback)frameId=film.requestVideoFrameCallback(revealFrame);else revealFrame();};
-  mediaStops.add(stop);film.addEventListener('ended',ended);film.addEventListener('error',failed);film.addEventListener('playing',playing);
-  film.muted=true;film.defaultMuted=true;film.volume=0;film.playbackRate=1;film.defaultPlaybackRate=1;film.hidden=false;if(!film.src)film.src='./assets/crt-letter-flythrough.mp4';film.currentTime=0;
+  let done=false,frameShown=false,frameId=null,watchdog=null,lastTime=-1;
+  const arm=ms=>{clearTimeout(watchdog);watchdog=setTimeout(failed,ms);};
+  const revealFrame=()=>{if(done||frameShown)return;frameShown=true;arm(5500);onFrame();};
+  const finish=ok=>{if(done)return;done=true;clearTimeout(watchdog);film.removeEventListener('ended',ended);film.removeEventListener('error',failed);film.removeEventListener('playing',playing);film.removeEventListener('timeupdate',progress);if(frameId!==null)film.cancelVideoFrameCallback?.(frameId);mediaStops.delete(stop);film.pause();film.hidden=true;resolve(ok);};
+  const ended=()=>finish(true),failed=()=>finish(false),stop=()=>finish(false);
+  // Startup gets its own allowance. Once frames advance, only a genuine stall
+  // times out; network startup no longer consumes the whole film's duration.
+  const progress=()=>{if(done||film.readyState<2||film.currentTime<=lastTime)return;lastTime=film.currentTime;if(lastTime>0)revealFrame();if(frameShown)arm(5500);};
+  const playing=()=>{if(done)return;if(film.requestVideoFrameCallback&&frameId===null)frameId=film.requestVideoFrameCallback(revealFrame);else if(!film.requestVideoFrameCallback)revealFrame();};
+  mediaStops.add(stop);film.addEventListener('ended',ended);film.addEventListener('error',failed);film.addEventListener('playing',playing);film.addEventListener('timeupdate',progress);
+  film.muted=true;film.defaultMuted=true;film.volume=0;film.playbackRate=1;film.defaultPlaybackRate=1;film.hidden=false;
+  prepareLetterFilm();if(film.currentTime!==0)film.currentTime=0;arm(12000);
   try{film.play()?.catch(failed);}catch{failed();}
  });
 }
@@ -597,7 +613,7 @@ async function trainingSignoff(token){
  $('#training-complete-title').focus({preventScroll:true});window.InviteSignal?.tick?.('A',true);
  if(!await wait(quiet()?80:650)||!valid(token))return false;
  // Reading time is intentional, including for reduced-motion visitors.
- $('#training-letter-film')?.load?.();
+ prepareLetterFilm();
  if(!await wait(2000,true)||!valid(token))return false;
  let phoneStarted=false;
  const rain=$('#training-takeover'),portal=$('#training-letter-portal'),duration=quiet()?240:3000;
