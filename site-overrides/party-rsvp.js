@@ -7,6 +7,7 @@ const solo=document.getElementById('rsvp-solo'),plus=document.getElementById('rs
 const unique=()=>{const bytes=new Uint8Array(16);crypto.getRandomValues(bytes);return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');};
 let clientId;try{clientId=window.localStorage.getItem('matrix:response-client:v1');if(!/^[a-f0-9]{32}$/.test(clientId||'')){clientId=unique();window.localStorage.setItem('matrix:response-client:v1',clientId);}}catch{clientId=unique();}
 const trial=new URLSearchParams(location.search).get('trial')==='1';
+if(trial)document.addEventListener('click',event=>{const home=event.target?.closest?.('[data-home-link]');if(!home)return;const url=new URL(home.href,location.href);if(url.origin===location.origin){url.searchParams.set('trial','1');home.href=url.href;}},true);
 const key='matrix:recorded-response:v19:'+encodeURIComponent(name)+(trial?':trial':'');
 let record=null,busy=false,retry=0,attempts=0;
 try{const r=JSON.parse(window.localStorage.getItem(key));if(r&&r.name===name&&['solo','backup'].includes(r.choice)&&/^[a-f0-9]{32}$/.test(r.id)&&typeof r.recorded==='boolean'&&!(trial&&r.recorded))record=r;}catch{}
