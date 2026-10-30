@@ -124,3 +124,7 @@ Removed original action-stream frames 160–163 (three stray backward-dodge fram
 ## Existing FormSubmit recipient identifier (v17)
 
 Switched only the attendance AJAX destination from the plain Gmail address to the existing recipient identifier supplied in the owner’s previous FormSubmit email for matrixafterdark.github.io. This is a delivery test, not a verified fix: a direct labelled test still received HTTP 521. Button acknowledgement, retry and delivery verification logic, footage and audio remain unchanged. Owner inbox receipt is still required to confirm delivery.
+
+## Original receipt transport on selection (v18)
+
+Restores the completion-receipt transport from commit 31c102eb8600a2ed5ad1c9f1644a482ac0456239, using the same AJAX service through the existing recipient identifier, with original POST headers, keepalive, DETAILS VIEWED message fields and five-second single retry. Adds the selected option to the email body and subject. Trigger moved to the two attendance buttons; automatic final-page arrival remains a no-op. Last acknowledged selection is tracked separately from the displayed local selection, and changes can be re-sent. Fresh storage keys prevent old page-view or prior provider tests from suppressing this test. The UI remains SELECTION LOCKED only. All eight automated suites pass; real inbox delivery remains unverified. Clips, audio and sequence runtime files are unchanged.
