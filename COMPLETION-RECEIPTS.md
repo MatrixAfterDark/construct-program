@@ -1,7 +1,7 @@
-# Original receipt transport, button trigger (v18)
+# Durable responses (v19)
 
-The original final-page notification method is now called only by Solo Operative or Bringing Backup · +1 on either route. It uses the same AJAX service through the existing recipient identifier and the original request format, adding the option as selection and appending it to the email subject. No separate message is sent when arriving at the final page.
+Automatic final-page view notifications remain disabled. The two attendance buttons now post only to the separately hosted response service. Each response is stored before a {recorded:true,id} acknowledgement. The guest sees only SELECTION LOCKED after this acknowledgement. No message app or additional guest screen opens.
 
-The original five-second single retry is retained. Only a confirmed service success is recorded as sent. A local selected state is separate and displays SELECTION LOCKED immediately, whether or not email delivery has succeeded. Repeated acknowledged choices are suppressed; changing a choice sends an updated message. Fresh storage keys isolate old tests. Reopening the page restores the chosen button without sending; a failed choice can be tapped again to retry. No provider account or new bot is used.
+The service retains named choices and timestamps for the owner-only log. Trial links use trial=1 and test records do not enter actual guest totals. The owner-only CLEAR TEST RESPONSES action deletes tagged test records and the exact original setup-test identity only.
 
-The transport is restored, but inbox delivery is not verified. Neither an on-screen selection nor a mocked success response proves an email arrived. Browser and real-phone delivery checks remain outstanding.
+Email sending runs after storage in the background. Its known HTTP 521 failure is visible in the private log and does not lose attendance. Inbox delivery remains unverified and must not be claimed as working.
